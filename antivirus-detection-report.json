@@ -1,0 +1,54 @@
+﻿{
+    "Recommendations":  [
+                            "Activer Windows Defender avant installation",
+                            "Configurer whitelist pour: Windows Defender",
+                            "Pare-feu actif: Verifier regles sortantes"
+                        ],
+    "Timestamp":  {
+                      "value":  "\/Date(1764262606831)\/",
+                      "DisplayHint":  2,
+                      "DateTime":  "Thursday, November 27, 2025 4:56:46 PM"
+                  },
+    "ThirdPartyAntivirus":  [
+                                {
+                                    "UpToDate":  false,
+                                    "Name":  "Windows Defender",
+                                    "Publisher":  "windowsdefender://",
+                                    "Timestamp":  "Mon, 24 Nov 2025 10:50:10 GMT",
+                                    "ProductState":  393488,
+                                    "Enabled":  false
+                                }
+                            ],
+    "User":  "Administrator",
+    "EDR":  null,
+    "WindowsDefender":  {
+                            "Version":  null,
+                            "Name":  "Windows Defender",
+                            "RealTimeProtection":  false,
+                            "LastUpdate":  null,
+                            "BehaviorMonitor":  false,
+                            "CloudProtection":  false,
+                            "Enabled":  false
+                        },
+    "Firewall":  [
+                     {
+                         "Profile":  "Domain",
+                         "DefaultInbound":  0,
+                         "DefaultOutbound":  0,
+                         "Enabled":  1
+                     },
+                     {
+                         "Profile":  "Private",
+                         "DefaultInbound":  0,
+                         "DefaultOutbound":  0,
+                         "Enabled":  1
+                     },
+                     {
+                         "Profile":  "Public",
+                         "DefaultInbound":  0,
+                         "DefaultOutbound":  0,
+                         "Enabled":  1
+                     }
+                 ],
+    "Computer":  "WINDOWS-AMSTERD"
+}

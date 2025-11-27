@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="*" Name="CloudFare Installer" Language="1033" Version="1.0.0.0" Manufacturer="CloudFare" UpgradeCode="12345678-1234-1234-1234-123456789012">
+        <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+        <Media Id="1" Cabinet="CloudFare.cab" EmbedCab="yes" />
+        
+        <Feature Id="ProductFeature" Title="CloudFare Installation" Level="1">
+            <ComponentRef Id="InstallScript" />
+        </Feature>
+        
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="INSTALLFOLDER" Name="CloudFare" />
+            </Directory>
+        </Directory>
+        
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Component Id="InstallScript" Guid="87654321-4321-4321-4321-210987654321">
+                <File Id="InstallBat" Name="Install.bat" Source="Install.bat" />
+            </Component>
+        </DirectoryRef>
+        
+        <InstallExecuteSequence>
+            <Custom Action="RunInstall" After="InstallFinalize" />
+        </InstallExecuteSequence>
+        
+        <CustomAction Id="RunInstall" BinaryKey="WixCA" DllEntry="CAQuietExec" Execute="deferred" Return="ignore" Impersonate="no" />
+    </Product>
+</Wix>

