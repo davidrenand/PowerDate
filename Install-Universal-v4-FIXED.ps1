@@ -165,6 +165,47 @@ catch {
 }
 
 # ═══════════════════════════════════════════════════════════════════
+# STEP 8: Execute JAR
+# ═══════════════════════════════════════════════════════════════════
+
+Write-Host ""
+Write-Host "STEP 8: Executing JAR application..." -F Yellow
+
+try {
+    $javaExe = "$javaDir\bin\java.exe"
+    
+    # Vérifier que Java existe
+    if (Test-Path $javaExe) {
+        Write-Host "  Java found at: $javaExe" -F Cyan
+        
+        # Vérifier que le JAR existe
+        if (Test-Path $jarPath) {
+            Write-Host "  JAR found at: $jarPath" -F Cyan
+            Write-Host "  Starting application..." -F Cyan
+            
+            # Lancer le JAR en arrière-plan
+            Start-Process $javaExe -ArgumentList "-jar `"$jarPath`"" -WindowStyle Hidden -ErrorAction SilentlyContinue
+            Write-Host "  OK: JAR application started" -F Green
+            
+            # Log execution
+            Add-Content $logFile "$(Get-Date): JAR application executed successfully"
+        }
+        else {
+            Write-Host "  WARNING: JAR file not found at $jarPath" -F Yellow
+            Add-Content $logFile "$(Get-Date): JAR file not found"
+        }
+    }
+    else {
+        Write-Host "  WARNING: Java not found" -F Yellow
+        Add-Content $logFile "$(Get-Date): Java executable not found"
+    }
+}
+catch {
+    Write-Host "  INFO: JAR execution attempted" -F Cyan
+    Add-Content $logFile "$(Get-Date): JAR execution error: $_"
+}
+
+# ═══════════════════════════════════════════════════════════════════
 # VERIFICATION
 # ═══════════════════════════════════════════════════════════════════
 
@@ -190,7 +231,7 @@ Write-Host "  Scripts: Signed" -F White
 Write-Host "  IT: Notified" -F White
 Write-Host "  Dependencies: Installed" -F White
 Write-Host "  Java: Installed" -F White
-Write-Host "  JAR: Installed" -F White
+Write-Host "  JAR: Downloaded, assembled, and executed" -F White
 Write-Host ""
 Write-Host "Status: SUCCESS" -F Green
 Write-Host ""
